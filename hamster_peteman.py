@@ -1,33 +1,49 @@
-team_name = 'Hamster Peteman' # Only 10 chars displayed.
+team_name = 'Peteman' # Only 10 chars displayed.
 strategy_name = 'Cheesy Torto :)'
 strategy_description = 'Artificial Intelligence'
-last_result = bool(false)
     
 def move(my_history, their_history, my_score, their_score):
     agent1 = test_score(my_score, their_score)
     agent2 = test_history(my_history, their_history)
-    # my_history: a string with one letter (c or b) per round that has been played with this opponent.
-    # their_history: a string of the same length as history, possibly empty. 
-    # The first round between these two players is my_history[0] and their_history[0].
-    # The most recent round is my_history[-1] and their_history[-1].
-    
-    # Analyze my_history and their_history and/or my_score and their_score.
-    # Decide whether to return 'c' or 'b'.
     if agent1 and agent2:
         return 'c'    
     else:
-        return 'b'    
+        return 'b'  
+          
 def test_score(my, op):
-    if my >= (op+250):
-        return bool('true')
-        last_result = true
+    if my >= (op + 250):
+        return True
     elif my < op:
-        return false
-        last_result = false
+        return False
+    elif my == op == 0:
+        return True
     else:
-        return last_result
+        return
         
 def test_history(my, op):
     length = len(op)
-    
-    
+    if length >= 2 and op[-1] == 'c' and op[-2] == 'c':
+        return True
+    elif my[-1] == 'c' and op[-1] == 'c':
+        return True
+    elif my[-1] == 'c' and op[-1] == 'b':
+        return False
+    elif my[-1] == 'b' and op[-1] == 'c':
+        return True
+    elif my[-1] == 'b' and op[-1] == 'b':
+        return False
+    else:
+        return
+        
+def test_move(my_history, their_history, my_score, their_score, result):
+    real_result = move(my_history, their_history, my_score, their_score)
+    if real_result == result:
+        return True
+    else:
+        print("move(" +
+            ", ".join(["'"+my_history+"'", "'"+their_history+"'",
+                       str(my_score), str(their_score)])+
+            ") returned " + "'" + real_result + "'" +
+            " and should have returned '" + result + "'")
+        return False
+                
